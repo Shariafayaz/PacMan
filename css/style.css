@@ -68,8 +68,8 @@ body {
 
 .hud-btn {
     background-color: transparent;
-    color: var(--pacman-color);
-    border: 1px solid var(--pacman-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
     font-family: 'Press Start 2P', cursive;
     font-size: 10px;
     padding: 4px 8px;
@@ -78,7 +78,7 @@ body {
 }
 
 .hud-btn:hover {
-    background-color: var(--pacman-color);
+    background-color: var(--text-color);
     color: #000;
 }
 
