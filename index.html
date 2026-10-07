@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pac-Man Custom Canvas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-left">
+                <div>SCORE: <span id="score">0</span></div>
+                <div>LIVES: <span id="lives">3</span></div>
+            </div>
+            <div class="hud-center">
+                <div>LEVEL: <span id="level">1</span></div>
+            </div>
+            <div class="hud-right">
+                <div>HIGH SCORE: <span id="high-score">0</span></div>
+            </div>
+        </div>
+
+        <!-- Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- UI Overlays -->
+        <div id="ui-layer" class="overlay">
+            
+            <div id="start-screen" class="screen">
+                <h1 class="title-glow">PAC-MAN</h1>
+                <p>Press ARROW KEYS or WASD to move</p>
+                <p>P to Pause | M to Mute | F for FPS</p>
+                <div id="difficulty-selector" style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button id="btn-easy" class="retro-btn diff-btn">EASY</button>
+                    <button id="btn-medium" class="retro-btn diff-btn selected">MEDIUM</button>
+                    <button id="btn-hard" class="retro-btn diff-btn">HARD</button>
+                </div>
+                <button id="start-btn" class="retro-btn">START GAME</button>
+            </div>
+
+            <div id="pause-screen" class="screen hidden">
+                <h1 class="title-glow">PAUSED</h1>
+                <p>Press P to resume</p>
+                <button id="resume-btn" class="retro-btn">RESUME</button>
+            </div>
+
+            <div id="game-over-screen" class="screen hidden">
+                <h1 class="title-glow text-red">GAME OVER</h1>
+                <p>Final Score: <span id="final-score">0</span></p>
+                <div style="display: flex; gap: 10px;">
+                    <button id="restart-btn" class="retro-btn">PLAY AGAIN</button>
+                    <button id="home-btn-gameover" class="retro-btn">MAIN MENU</button>
+                </div>
+            </div>
+
+            <div id="victory-screen" class="screen hidden">
+                <h1 class="title-glow text-green">YOU WIN!</h1>
+                <p>Score: <span id="victory-score">0</span></p>
+                <div style="display: flex; gap: 10px;">
+                    <button id="next-level-btn" class="retro-btn">NEXT LEVEL</button>
+                    <button id="home-btn-victory" class="retro-btn">MAIN MENU</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FPS Counter -->
+        <div id="fps-counter" class="hidden">FPS: <span id="fps-value">60</span></div>
+        
+        <!-- Mute Icon -->
+        <div id="mute-indicator" class="hidden">🔇 Muted</div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
