@@ -95,7 +95,7 @@ canvas {
 
 .screen {
     pointer-events: auto;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: #000;
     border: 2px solid var(--pacman-color);
     padding: 40px;
     text-align: center;
@@ -220,14 +220,20 @@ p {
         font-size: 10px;
     }
 
+    .screen > div {
+        flex-direction: column !important;
+        width: 100%;
+    }
+
     .retro-btn {
         padding: 10px 15px;
-        font-size: 12px;
+        font-size: 10px; /* Make button font smaller to fit better */
         margin-top: 10px;
+        width: 100%; /* Make buttons take full width */
     }
 
     .diff-btn {
-        padding: 8px 10px;
+        padding: 10px;
         font-size: 10px;
     }
 

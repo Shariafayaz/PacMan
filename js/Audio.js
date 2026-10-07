@@ -62,16 +62,16 @@ class AudioController {
 
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(300, this.audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(50, this.audioCtx.currentTime + 1.5);
+        osc.frequency.exponentialRampToValueAtTime(50, this.audioCtx.currentTime + 0.75);
 
         gain.gain.setValueAtTime(0.3, this.audioCtx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.01, this.audioCtx.currentTime + 1.5);
+        gain.gain.linearRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.75);
 
         osc.connect(gain);
         gain.connect(this.audioCtx.destination);
 
         osc.start();
-        osc.stop(this.audioCtx.currentTime + 1.5);
+        osc.stop(this.audioCtx.currentTime + 0.75);
     }
 
     playStart() {
