@@ -11,6 +11,8 @@ class UI {
         this.victoryScreen = document.getElementById('victory-screen');
         this.allCompletedScreen = document.getElementById('all-completed-screen');
         
+        this.uiLayer = document.getElementById('ui-layer');
+        
         this.finalScoreEl = document.getElementById('final-score');
         this.victoryScoreEl = document.getElementById('victory-score');
         this.allCompletedScoreEl = document.getElementById('all-completed-score');
@@ -66,6 +68,7 @@ class UI {
     }
 
     hideAllScreens() {
+        if(this.uiLayer) this.uiLayer.classList.remove('overlay-active');
         this.startScreen.classList.add('hidden');
         this.pauseScreen.classList.add('hidden');
         this.gameOverScreen.classList.add('hidden');
@@ -75,28 +78,33 @@ class UI {
 
     showStartScreen() {
         this.hideAllScreens();
+        if(this.uiLayer) this.uiLayer.classList.add('overlay-active');
         this.startScreen.classList.remove('hidden');
     }
 
     showPauseScreen() {
         this.hideAllScreens();
+        if(this.uiLayer) this.uiLayer.classList.add('overlay-active');
         this.pauseScreen.classList.remove('hidden');
     }
 
     showGameOverScreen(score) {
         this.hideAllScreens();
+        if(this.uiLayer) this.uiLayer.classList.add('overlay-active');
         this.finalScoreEl.textContent = score;
         this.gameOverScreen.classList.remove('hidden');
     }
 
     showVictoryScreen(score) {
         this.hideAllScreens();
+        if(this.uiLayer) this.uiLayer.classList.add('overlay-active');
         this.victoryScoreEl.textContent = score;
         this.victoryScreen.classList.remove('hidden');
     }
 
     showAllCompletedScreen(score) {
         this.hideAllScreens();
+        if(this.uiLayer) this.uiLayer.classList.add('overlay-active');
         if(this.allCompletedScoreEl) this.allCompletedScoreEl.textContent = score;
         if(this.allCompletedScreen) this.allCompletedScreen.classList.remove('hidden');
     }

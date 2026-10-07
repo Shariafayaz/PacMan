@@ -93,6 +93,10 @@ canvas {
     z-index: 10;
 }
 
+.overlay.overlay-active {
+    background-color: #111; /* Match body background to seamlessly hide game */
+}
+
 .screen {
     pointer-events: auto;
     background-color: #000;
