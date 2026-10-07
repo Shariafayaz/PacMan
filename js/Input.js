@@ -15,6 +15,14 @@ class Input {
 
         window.addEventListener('keydown', this.handleKeyDown.bind(this));
         window.addEventListener('keyup', this.handleKeyUp.bind(this));
+        
+        // Touch events
+        this.touchStartX = null;
+        this.touchStartY = null;
+        // Use passive: false to allow preventDefault if necessary, though we handle preventDefault via css touch-action
+        window.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
+        window.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: true });
+        window.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: true });
     }
 
     handleKeyDown(e) {
@@ -43,6 +51,48 @@ class Input {
         } else if (this.keys['ArrowRight'] || this.keys['d'] || this.keys['D']) {
             this.desiredDirection = DIRECTIONS.RIGHT;
         }
+    }
+
+    handleTouchStart(e) {
+        const touch = e.touches[0];
+        this.touchStartX = touch.clientX;
+        this.touchStartY = touch.clientY;
+    }
+
+    handleTouchMove(e) {
+        if (!this.touchStartX || !this.touchStartY) return;
+
+        const touch = e.touches[0];
+        const diffX = touch.clientX - this.touchStartX;
+        const diffY = touch.clientY - this.touchStartY;
+
+        const threshold = 30; // Minimum swipe distance in pixels
+
+        if (Math.abs(diffX) > threshold || Math.abs(diffY) > threshold) {
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                // Horizontal swipe
+                if (diffX > 0) {
+                    this.desiredDirection = DIRECTIONS.RIGHT;
+                } else {
+                    this.desiredDirection = DIRECTIONS.LEFT;
+                }
+            } else {
+                // Vertical swipe
+                if (diffY > 0) {
+                    this.desiredDirection = DIRECTIONS.DOWN;
+                } else {
+                    this.desiredDirection = DIRECTIONS.UP;
+                }
+            }
+            // Reset start coordinates to allow continuous swiping without lifting finger
+            this.touchStartX = touch.clientX;
+            this.touchStartY = touch.clientY;
+        }
+    }
+
+    handleTouchEnd(e) {
+        this.touchStartX = null;
+        this.touchStartY = null;
     }
 
     consumeAction(action) {
