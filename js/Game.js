@@ -124,6 +124,7 @@ export default class Game {
         this.maze.parseMap(this.level);
         this.initEntities();
         this.updateHUD();
+        this.draw(); // Clear the canvas of old game state
         UI.showStartScreen();
     }
 
