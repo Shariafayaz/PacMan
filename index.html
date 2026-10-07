@@ -57,11 +57,19 @@
             </div>
 
             <div id="victory-screen" class="screen hidden">
-                <h1 class="title-glow text-green">YOU WIN!</h1>
+                <h1 class="title-glow text-green">LEVEL CLEARED!</h1>
                 <p>Score: <span id="victory-score">0</span></p>
                 <div style="display: flex; gap: 10px;">
                     <button id="next-level-btn" class="retro-btn">NEXT LEVEL</button>
                     <button id="home-btn-victory" class="retro-btn">MAIN MENU</button>
+                </div>
+            </div>
+
+            <div id="all-completed-screen" class="screen hidden">
+                <h1 class="title-glow text-green">ALL LEVELS COMPLETED!</h1>
+                <p>Final Score: <span id="all-completed-score">0</span></p>
+                <div style="display: flex; gap: 10px;">
+                    <button id="home-btn-completed" class="retro-btn">MAIN MENU</button>
                 </div>
             </div>
         </div>

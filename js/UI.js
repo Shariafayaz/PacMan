@@ -9,9 +9,11 @@ class UI {
         this.pauseScreen = document.getElementById('pause-screen');
         this.gameOverScreen = document.getElementById('game-over-screen');
         this.victoryScreen = document.getElementById('victory-screen');
+        this.allCompletedScreen = document.getElementById('all-completed-screen');
         
         this.finalScoreEl = document.getElementById('final-score');
         this.victoryScoreEl = document.getElementById('victory-score');
+        this.allCompletedScoreEl = document.getElementById('all-completed-score');
         
         this.fpsCounter = document.getElementById('fps-counter');
         this.fpsValue = document.getElementById('fps-value');
@@ -68,6 +70,7 @@ class UI {
         this.pauseScreen.classList.add('hidden');
         this.gameOverScreen.classList.add('hidden');
         this.victoryScreen.classList.add('hidden');
+        if(this.allCompletedScreen) this.allCompletedScreen.classList.add('hidden');
     }
 
     showStartScreen() {
@@ -90,6 +93,12 @@ class UI {
         this.hideAllScreens();
         this.victoryScoreEl.textContent = score;
         this.victoryScreen.classList.remove('hidden');
+    }
+
+    showAllCompletedScreen(score) {
+        this.hideAllScreens();
+        if(this.allCompletedScoreEl) this.allCompletedScoreEl.textContent = score;
+        if(this.allCompletedScreen) this.allCompletedScreen.classList.remove('hidden');
     }
 }
 

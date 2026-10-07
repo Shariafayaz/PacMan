@@ -23,7 +23,7 @@ export default class Game {
         this.lives = 3;
         this.level = 1;
         
-        this.maze = new Maze();
+        this.maze = new Maze(this.level);
         this.pacman = null;
         this.ghosts = [];
         
@@ -70,6 +70,7 @@ export default class Game {
         document.getElementById('next-level-btn').addEventListener('click', () => this.nextLevel());
         document.getElementById('home-btn-gameover').addEventListener('click', () => this.goToHome());
         document.getElementById('home-btn-victory').addEventListener('click', () => this.goToHome());
+        document.getElementById('home-btn-completed').addEventListener('click', () => this.goToHome());
     }
 
     start() {
@@ -85,7 +86,7 @@ export default class Game {
         this.score = 0;
         this.lives = 3;
         this.level = 1;
-        this.maze.parseMap(); // Reset map and pellets
+        this.maze.parseMap(this.level); // Reset map and pellets
         this.initEntities();
         this.updateHUD();
         this.start();
@@ -93,7 +94,8 @@ export default class Game {
 
     nextLevel() {
         this.level++;
-        this.maze.resetPellets();
+        this.lives = 3;
+        this.maze.parseMap(this.level); // Load new map and reset pellets
         this.initEntities();
         this.updateHUD();
         this.start();
@@ -116,7 +118,7 @@ export default class Game {
         this.score = 0;
         this.lives = 3;
         this.level = 1;
-        this.maze.parseMap();
+        this.maze.parseMap(this.level);
         this.initEntities();
         this.updateHUD();
         UI.showStartScreen();
@@ -151,8 +153,19 @@ export default class Game {
     }
 
     winLevel() {
-        this.state = GAME_STATES.VICTORY;
-        UI.showVictoryScreen(this.score);
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+            localStorage.setItem('pacman_highscore', this.highScore);
+            UI.updateHighScore(this.highScore);
+        }
+
+        if (this.level >= 3) {
+            this.state = GAME_STATES.VICTORY; // Use victory state to stop play
+            UI.showAllCompletedScreen(this.score);
+        } else {
+            this.state = GAME_STATES.VICTORY;
+            UI.showVictoryScreen(this.score);
+        }
     }
 
     addScore(points) {

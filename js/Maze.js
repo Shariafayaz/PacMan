@@ -1,23 +1,25 @@
-import { MAP_STR, charToType, TYPES, TILE_SIZE, COLORS } from './constants.js';
+import { MAPS, charToType, TYPES, TILE_SIZE, COLORS } from './constants.js';
 import Pellet from './Pellet.js';
 
 export default class Maze {
-    constructor() {
+    constructor(level = 1) {
         this.grid = [];
         this.pellets = [];
         this.powerPellets = [];
-        this.parseMap();
+        this.parseMap(level);
     }
 
-    parseMap() {
+    parseMap(level = 1) {
         this.grid = [];
         this.pellets = [];
         this.powerPellets = [];
 
-        for (let row = 0; row < MAP_STR.length; row++) {
+        const mapStr = MAPS[(level - 1) % MAPS.length];
+
+        for (let row = 0; row < mapStr.length; row++) {
             let gridRow = [];
-            for (let col = 0; col < MAP_STR[row].length; col++) {
-                const char = MAP_STR[row][col];
+            for (let col = 0; col < mapStr[row].length; col++) {
+                const char = mapStr[row][col];
                 const type = charToType(char);
                 gridRow.push(type);
 
