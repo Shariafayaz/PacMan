@@ -66,6 +66,7 @@ export default class Game {
     }
 
     setupEvents() {
+        document.getElementById('mobile-pause-btn').addEventListener('click', () => this.togglePause());
         document.getElementById('start-btn').addEventListener('click', () => this.start());
         document.getElementById('resume-btn').addEventListener('click', () => this.togglePause());
         document.getElementById('restart-btn').addEventListener('click', () => this.restartGame());
