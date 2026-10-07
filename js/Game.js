@@ -222,14 +222,6 @@ export default class Game {
     }
 
     update(dt) {
-        // Global Actions
-        if (Input.consumeAction('pause')) this.togglePause();
-        if (Input.consumeAction('mute')) {
-            const isMuted = Audio.toggleMute();
-            UI.toggleMuteIcon(isMuted);
-        }
-        if (Input.consumeAction('fps')) UI.toggleFPS(!UI.fpsCounter.classList.contains('hidden'));
-
         if (this.state !== GAME_STATES.PLAYING) return;
 
         this.handleGhostModes(dt);
@@ -313,11 +305,25 @@ export default class Game {
 
         UI.updateFPS(1000 / dt);
 
+        // Global Actions (checked every frame regardless of state)
+        if (Input.consumeAction('pause')) this.togglePause();
+        if (Input.consumeAction('mute')) {
+            const isMuted = Audio.toggleMute();
+            UI.toggleMuteIcon(isMuted);
+        }
+        if (Input.consumeAction('fps')) UI.toggleFPS(!UI.fpsCounter.classList.contains('hidden'));
+
+        // Only process game logic if playing or dying
         if (this.state === GAME_STATES.PLAYING || this.state === GAME_STATES.PACMAN_DYING) {
             if (this.state === GAME_STATES.PLAYING) {
                 this.update(dt);
             }
             this.draw();
+            if (this.animationId) cancelAnimationFrame(this.animationId);
+            this.animationId = requestAnimationFrame(this.loop);
+        } else if (this.state === GAME_STATES.PAUSED) {
+            // If paused, we still need to queue the next frame to listen for unpause via keyboard!
+            if (this.animationId) cancelAnimationFrame(this.animationId);
             this.animationId = requestAnimationFrame(this.loop);
         }
     }
