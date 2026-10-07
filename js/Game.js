@@ -76,6 +76,7 @@ export default class Game {
     }
 
     start() {
+        this.initEntities();
         Audio.init();
         Audio.playStart();
         this.state = GAME_STATES.PLAYING;
@@ -90,7 +91,6 @@ export default class Game {
         this.lives = 3;
         this.level = 1;
         this.maze.parseMap(this.level); // Reset map and pellets
-        this.initEntities();
         this.updateHUD();
         this.start();
     }
@@ -99,7 +99,6 @@ export default class Game {
         this.level++;
         this.lives = 3;
         this.maze.parseMap(this.level); // Load new map and reset pellets
-        this.initEntities();
         this.updateHUD();
         this.start();
     }
@@ -307,13 +306,16 @@ export default class Game {
         let dt = timestamp - this.lastTime;
         this.lastTime = timestamp;
 
-        // Cap dt to prevent massive jumps when tab is inactive
+        // Cap dt to prevent massive jumps or negative values
         if (dt > 100) dt = 100;
+        if (dt < 0) dt = 0;
 
         UI.updateFPS(1000 / dt);
 
-        if (this.state === GAME_STATES.PLAYING) {
-            this.update(dt);
+        if (this.state === GAME_STATES.PLAYING || this.state === GAME_STATES.PACMAN_DYING) {
+            if (this.state === GAME_STATES.PLAYING) {
+                this.update(dt);
+            }
             this.draw();
             this.animationId = requestAnimationFrame(this.loop);
         }
