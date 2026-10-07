@@ -42,6 +42,8 @@ export default class Game {
             { mode: 1, time: TIMINGS.CHASE_DURATION_3 }
         ];
 
+        this.loop = this.loop.bind(this);
+
         this.initEntities();
         this.setupEvents();
     }
@@ -79,7 +81,8 @@ export default class Game {
         this.state = GAME_STATES.PLAYING;
         UI.hideAllScreens();
         this.lastTime = performance.now();
-        requestAnimationFrame(this.loop.bind(this));
+        if (this.animationId) cancelAnimationFrame(this.animationId);
+        this.animationId = requestAnimationFrame(this.loop);
     }
 
     restartGame() {
@@ -109,7 +112,8 @@ export default class Game {
             this.state = GAME_STATES.PLAYING;
             UI.hideAllScreens();
             this.lastTime = performance.now();
-            requestAnimationFrame(this.loop.bind(this));
+            if (this.animationId) cancelAnimationFrame(this.animationId);
+            this.animationId = requestAnimationFrame(this.loop);
         }
     }
 
@@ -135,7 +139,8 @@ export default class Game {
                 this.initEntities();
                 this.state = GAME_STATES.PLAYING;
                 this.lastTime = performance.now();
-                requestAnimationFrame(this.loop.bind(this));
+                if (this.animationId) cancelAnimationFrame(this.animationId);
+                this.animationId = requestAnimationFrame(this.loop);
             } else {
                 this.gameOver();
             }
@@ -310,7 +315,7 @@ export default class Game {
         if (this.state === GAME_STATES.PLAYING) {
             this.update(dt);
             this.draw();
-            requestAnimationFrame(this.loop.bind(this));
+            this.animationId = requestAnimationFrame(this.loop);
         }
     }
 }
